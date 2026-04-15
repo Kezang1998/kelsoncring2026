@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About — Kezang Tshering</title>
+  <meta name="description" content="About Kezang Tshering — Engineering Surveyor & UI Designer from Bhutan."/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./shared.css"/>
+
+  <!-- ── Page-specific styles only ── -->
+  <style>
+  .page { position: relative; z-index: 1; padding-top: var(--nav-h); }
+
+  /* Hero band */
+  .hero-band {
+    padding: 5rem var(--pad-x) 4rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 3rem; align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(74,222,128,0.07);
+    border: 1px solid var(--border);
+    border-radius: 99px; padding: 0.3rem 0.9rem;
+    font-size: 0.74rem; font-weight: 500;
+    color: var(--green); letter-spacing: 0.5px;
+    margin-bottom: 0.8rem;
+  }
+  .hero-name {
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    font-weight: 800; line-height: 1.05;
+    letter-spacing: -1.2px; margin-bottom: 0.4rem;
+  }
+  .hero-name span {
+    background: linear-gradient(135deg, var(--green), #86efac);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-role { font-size: clamp(0.92rem, 2vw, 1.1rem); color: var(--muted); font-weight: 300; letter-spacing: 0.3px; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.4rem; }
+
+  /* Avatar */
+  .avatar-wrap .avatar { width: 130px; height: 130px; }
+  .avatar-dot { bottom: 6px; right: 6px; }
+
+  /* Content grid */
+  .content {
+    padding: 4rem var(--pad-x) 6rem;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem; align-items: start;
+  }
+
+  /* Sidebar stats */
+  .sidebar { display: flex; flex-direction: column; gap: 1.4rem; }
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem;
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: none;
+  }
+  .stat-card:hover { border-color: var(--border-hover); transform: translateX(5px); }
+  .stat-num {
+    font-size: 2.7rem; font-weight: 800; line-height: 1;
+    background: linear-gradient(135deg, var(--green), #86efac);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stat-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; margin-top: 0.3rem; }
+
+  .contact-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem;
+  }
+  .contact-card h4 {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.5px; color: var(--green); margin-bottom: 1rem;
+  }
+  .contact-row {
+    display: flex; align-items: center; gap: 0.75rem;
+    margin-bottom: 0.7rem; font-size: 0.86rem; color: var(--sub);
+  }
+  .contact-row:last-child { margin-bottom: 0; }
+  .contact-row i { color: var(--green); width: 16px; text-align: center; flex-shrink: 0; }
+  .contact-row a { color: var(--sub); text-decoration: none; transition: color 0.2s; }
+  .contact-row a:hover { color: var(--green); }
+
+  /* Main content */
+  .section-divider {
+    width: 36px; height: 3px;
+    background: linear-gradient(90deg, var(--green), transparent);
+    border-radius: 2px; margin-bottom: 2rem;
+  }
+  .summary-intro { color: var(--sub); line-height: 1.88; margin-bottom: 2rem; font-size: 0.96rem; }
+
+  .points-list { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
+  .points-list li {
+    display: flex; align-items: flex-start; gap: 1rem;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1rem 1.2rem;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    cursor: none;
+  }
+  .points-list li:hover {
+    border-color: var(--border-hover);
+    transform: translateX(6px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+  .point-num {
+    flex-shrink: 0;
+    width: 28px; height: 28px; border-radius: 8px;
+    background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; font-weight: 700; color: var(--green);
+  }
+  .point-text { font-size: 0.88rem; color: var(--sub); line-height: 1.68; padding-top: 4px; }
+
+  @media (max-width: 900px) {
+    .content { grid-template-columns: 1fr; gap: 3rem; }
+    .sidebar { flex-direction: row; flex-wrap: wrap; }
+    .stat-card { flex: 1; min-width: 130px; }
+    .contact-card { width: 100%; }
+    .hero-band { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
+    .avatar-wrap { margin: 0 auto; }
+    .hero-actions { justify-content: center; }
+  }
+  @media (max-width: 500px) {
+    .sidebar { flex-direction: column; }
+    .stat-card { flex: unset; }
+  }
+  </style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<canvas id="three-canvas"></canvas>
+
+<!-- NAV ──────────────────────────────────────────────────────── -->
+<header id="header">
+  <a href="index.html" class="logo">KT</a>
+  <button class="ham" id="ham" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <nav class="nav-links" id="nav">
+    <a href="/Portfolio">Home</a>
+    <a href="/Portfolio/about.html" class="active">About</a>
+    <a href="/Portfolio/resume.html">Resume</a>
+    <a href="/Portfolio/contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="page">
+
+  <!-- HERO BAND ─────────────────────────────────────────────── -->
+  <div class="hero-band">
+    <div class="avatar-wrap reveal">
+      <div class="avatar-ring"></div>
+      <img class="avatar"
+        src="images/about.jpeg"
+        alt="Kezang Tshering"/>
+      <div class="avatar-dot"></div>
+    </div>
+    <div>
+      <div class="hero-badge reveal">🇧🇹 Based in Bhutan · Open to Work</div>
+      <h1 class="hero-name reveal">Kezang <span>Tshering</span></h1>
+      <p class="hero-role reveal">Engineering &amp; Topographic Surveyor · UI Designer</p>
+      <div class="hero-actions reveal">
+        <a href="mailto:Kelsoncring1598@gmail.com" class="btn btn-primary">
+          <i class="fa fa-paper-plane"></i> Contact Me
+        </a>
+        <a href="pdf/PandyCV.pdf" download class="btn btn-ghost">
+          <i class="fa fa-download"></i> Download CV
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT ────────────────────────────────────────────────── -->
+  <div class="content">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="stat-card reveal">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-card reveal">
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Projects Completed</div>
+      </div>
+      <div class="stat-card reveal">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Client Satisfaction</div>
+      </div>
+
+      <div class="contact-card reveal">
+        <h4>Contact Info</h4>
+        <div class="contact-row"><i class="fa fa-envelope"></i><a href="mailto:Kelsoncring1598@gmail.com">Kelsoncring1598@gmail.com</a></div>
+        <div class="contact-row"><i class="fa fa-phone"></i><span>+975 17781413</span></div>
+        <div class="contact-row"><i class="fa fa-map-marker"></i><span>Nagzor, Orong, S/Jongkhar, Bhutan</span></div>
+        <div class="contact-row"><i class="fa fa-facebook"></i><a href="https://www.facebook.com/sonlek.gnirc?mibextid=ZbWKwL" target="_blank" rel="noopener">Facebook</a></div>
+        <div class="contact-row"><i class="fa fa-whatsapp"></i><a href="https://wa.me/97517781413" target="_blank" rel="noopener">WhatsApp</a></div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main>
+      <div class="section-eyebrow reveal">Professional Profile</div>
+      <h2 class="section-heading reveal">Summary</h2>
+      <div class="section-divider reveal"></div>
+      <p class="summary-intro reveal">
+        Deadline-oriented surveyor with extensive hands-on experience in topographic and engineering survey. Solid track record of architecting precision solutions that exceed client expectations, with a growing passion for UI design and modern web development.
+      </p>
+      <ul class="points-list">
+        <li class="reveal"><div class="point-num">01</div><p class="point-text">Preparing, monitoring and control of programs and claiming all contractual entitlements on behalf of clients.</p></li>
+        <li class="reveal"><div class="point-num">02</div><p class="point-text">Ensuring the correct analysis of engineering drawings and technical specifications for all survey tasks.</p></li>
+        <li class="reveal"><div class="point-num">03</div><p class="point-text">Ensuring that the department upholds good relationships with local sub-trades and stakeholders.</p></li>
+        <li class="reveal"><div class="point-num">04</div><p class="point-text">Building positive internal and external client relations throughout the full project lifecycle.</p></li>
+        <li class="reveal"><div class="point-num">05</div><p class="point-text">Ensuring that the department performs pre-construction services and accurate estimating.</p></li>
+        <li class="reveal"><div class="point-num">06</div><p class="point-text">Checking and verifying quantity take-offs to maintain project accuracy and budget integrity.</p></li>
+        <li class="reveal"><div class="point-num">07</div><p class="point-text">Drafting and sending all departmental correspondences in a timely and professional manner.</p></li>
+        <li class="reveal"><div class="point-num">08</div><p class="point-text">Proficient in Total Station, GNSS instruments and Rotary Laser for high-precision setting-out work.</p></li>
+      </ul>
+    </main>
+
+  </div>
+</div>
+
+<!-- FOOTER ───────────────────────────────────────────────────── -->
+<footer>
+  <p><span class="accent">Kezang Tshering</span> · Kelson © <span id="year"></span> · Bhutan 🇧🇹</p>
+</footer>
+
+<!-- SCRIPTS ──────────────────────────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="./shared.js"></script>
+
+<script>
+  stampYear();
+  initNav();
+  initCursor();
+  initBandReveals(".hero-band .reveal");
+  initContentReveals(".content .reveal");
+
+  initThree({
+    shapes: [
+      { geo: new THREE.IcosahedronGeometry(1.1, 1), x:  4,   y:  1, z: -1, opacity: 0.06 },
+      { geo: new THREE.TorusGeometry(1.5, 0.4, 10, 50), x: -4, y: -2, z:  0, opacity: 0.05 },
+    ]
+  });
+</script>
+</body>
+</html>

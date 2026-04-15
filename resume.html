@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resume — Kezang Tshering</title>
+  <meta name="description" content="Kezang Tshering's CV — Engineering Surveyor and UI Designer from Bhutan."/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./shared.css"/>
+
+  <!-- ── Page-specific styles only ── -->
+  <style>
+  .page { position: relative; z-index: 1; padding-top: var(--nav-h); }
+
+  /* Hero band */
+  .hero-band {
+    padding: 5rem var(--pad-x) 4rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 2.5rem; align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .avatar-wrap .avatar { width: 110px; height: 110px; }
+  .avatar-dot { bottom: 4px; right: 4px; }
+
+  .hero-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--green); margin-bottom: 0.45rem; }
+  .hero-name {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800; line-height: 1.05;
+    letter-spacing: -1px; margin-bottom: 0.35rem;
+  }
+  .hero-name span {
+    background: linear-gradient(135deg, var(--green), #86efac);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-role { color: var(--muted); font-size: clamp(0.88rem, 1.8vw, 1.02rem); font-weight: 300; margin-bottom: 0.7rem; }
+  .hero-summary { color: var(--sub); font-size: 0.88rem; line-height: 1.78; max-width: 540px; }
+  .hero-actions { display: flex; flex-direction: column; gap: 0.7rem; flex-shrink: 0; }
+
+  /* Resume body layout */
+  .resume-body {
+    display: grid;
+    grid-template-columns: 1fr 1.7fr;
+    gap: 0; min-height: 60vh;
+  }
+  .sidebar {
+    padding: 3rem 2.5rem 5rem var(--pad-x);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 3rem;
+  }
+  .main-col {
+    padding: 3rem var(--pad-x) 5rem 3rem;
+    display: flex; flex-direction: column; gap: 3.5rem;
+  }
+
+  /* Section labels */
+  .sec-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--green); margin-bottom: 0.9rem; }
+  .sec-divider { width: 28px; height: 2px; background: linear-gradient(90deg, var(--green), transparent); border-radius: 2px; margin-bottom: 1.4rem; }
+
+  /* Contact block */
+  .contact-list { display: flex; flex-direction: column; gap: 0.75rem; }
+  .contact-item { display: flex; align-items: center; gap: 0.75rem; font-size: 0.86rem; color: var(--sub); }
+  .contact-item i { color: var(--green); width: 14px; text-align: center; flex-shrink: 0; }
+  .contact-item a { color: var(--sub); text-decoration: none; transition: color 0.2s; }
+  .contact-item a:hover { color: var(--green); }
+
+  /* Skill bars */
+  .skill-rows { display: flex; flex-direction: column; gap: 1.1rem; }
+  .skill-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+  .skill-name { font-size: 0.86rem; font-weight: 500; color: var(--text); }
+  .skill-level {
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.8px;
+    text-transform: uppercase; padding: 0.18rem 0.55rem;
+    border-radius: 99px;
+  }
+  .skill-level.expert       { background: rgba(74,222,128,0.13); color: var(--green); border: 1px solid rgba(74,222,128,0.22); }
+  .skill-level.intermediate { background: rgba(96,165,250,0.1);  color: #60a5fa;      border: 1px solid rgba(96,165,250,0.18); }
+
+  .skill-bar-wrap { height: 3px; background: rgba(255,255,255,0.06); border-radius: 99px; overflow: hidden; }
+  .skill-bar { height: 100%; border-radius: 99px; width: 0; transition: width 1.4s cubic-bezier(0.19,1,0.22,1); }
+  .skill-bar.bar-expert       { background: linear-gradient(90deg, var(--green), #86efac); }
+  .skill-bar.bar-intermediate { background: linear-gradient(90deg, #60a5fa, #93c5fd); }
+
+  /* Social */
+  .social-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+  /* Experience */
+  .exp-list { display: flex; flex-direction: column; gap: 1.1rem; }
+  .exp-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.4rem 1.5rem;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    position: relative; overflow: hidden; cursor: none;
+  }
+  .exp-card::before {
+    content: ""; position: absolute;
+    left: 0; top: 0; bottom: 0; width: 3px;
+    background: linear-gradient(to bottom, var(--green), transparent);
+    border-radius: 3px 0 0 3px;
+  }
+  .exp-card:hover { border-color: var(--border-hover); transform: translateX(5px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.4rem; }
+  .exp-title { font-size: 0.98rem; font-weight: 700; }
+  .exp-date {
+    font-size: 0.72rem; color: var(--green); font-weight: 600;
+    background: rgba(74,222,128,0.07); border: 1px solid var(--border);
+    border-radius: 99px; padding: 0.22rem 0.65rem;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .exp-org { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.5rem; }
+  .exp-org i { color: var(--green); font-size: 0.75rem; margin-right: 0.35rem; }
+  .exp-desc { font-size: 0.84rem; color: var(--sub); line-height: 1.72; }
+
+  /* Form card */
+  .form-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2rem;
+    position: relative; overflow: hidden;
+  }
+  .form-card::before {
+    content: ""; position: absolute; top: -50px; right: -50px;
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(74,222,128,0.07), transparent 70%);
+    border-radius: 50%; pointer-events: none;
+  }
+  .form-title { font-size: 1.08rem; font-weight: 800; margin-bottom: 0.3rem; }
+  .form-sub   { font-size: 0.8rem; color: var(--muted); margin-bottom: 1.4rem; }
+  .form-row2  { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  /* Footer links */
+  .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 0.8rem; }
+  .footer-links a { font-size: 0.8rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--green); }
+
+  @media (max-width: 900px) {
+    .hero-band { grid-template-columns: auto 1fr; grid-template-rows: auto auto; }
+    .hero-actions { flex-direction: row; flex-wrap: wrap; grid-column: 1 / -1; }
+    .resume-body { grid-template-columns: 1fr; }
+    .sidebar { border-right: none; border-bottom: 1px solid var(--border); padding: 3rem var(--pad-x); }
+    .main-col { padding: 3rem var(--pad-x); }
+  }
+  @media (max-width: 560px) {
+    .hero-band { grid-template-columns: 1fr; text-align: center; gap: 1.4rem; }
+    .avatar-wrap { margin: 0 auto; }
+    .hero-actions { justify-content: center; }
+    .form-row2 { grid-template-columns: 1fr; }
+  }
+  </style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<canvas id="three-canvas"></canvas>
+
+<!-- NAV ──────────────────────────────────────────────────────── -->
+<header id="header">
+  <a href="index.html" class="logo">KT</a>
+  <button class="ham" id="ham" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <nav class="nav-links" id="nav">
+    <a href="/Portfolio">Home</a>
+    <a href="/Portfolio/about.html">About</a>
+    <a href="/Portfolio/resume.html" class="active">Resume</a>
+    <a href="/Portfolio/contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="page">
+
+  <!-- HERO BAND ─────────────────────────────────────────────── -->
+  <div class="hero-band">
+    <div class="avatar-wrap reveal">
+      <div class="avatar-ring"></div>
+      <img class="avatar"
+        src="images/about.jpeg"
+        alt="Kezang Tshering"/>
+      <div class="avatar-dot"></div>
+    </div>
+    <div>
+      <div class="hero-label reveal">Curriculum Vitae</div>
+      <h1 class="hero-name reveal">Kezang <span>Tshering</span></h1>
+      <p class="hero-role reveal">Engineering &amp; Topographic Surveyor · UI Designer</p>
+      <p class="hero-summary reveal">Deadline-oriented surveyor with a track record of delivering precision survey solutions that exceed client expectations. Passionate about web design and modern UI development.</p>
+    </div>
+    <div class="hero-actions reveal">
+      <a href="pdf/PandyCV.pdf" download class="btn btn-primary">
+        <i class="fa fa-download"></i> Download CV
+      </a>
+      <a href="contact.html" class="btn btn-ghost">
+        <i class="fa fa-envelope"></i> Hire Me
+      </a>
+    </div>
+  </div>
+
+  <!-- BODY ───────────────────────────────────────────────────── -->
+  <div class="resume-body">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+      <div>
+        <div class="sec-label reveal">Contact</div>
+        <div class="sec-divider reveal"></div>
+        <div class="contact-list reveal">
+          <div class="contact-item"><i class="fa fa-envelope"></i><a href="mailto:Kelsoncring1598@gmail.com">Kelsoncring1598@gmail.com</a></div>
+          <div class="contact-item"><i class="fa fa-phone"></i><span>+975 17781413</span></div>
+          <div class="contact-item"><i class="fa fa-map-marker"></i><span>Nagzor, Orong, S/Jongkhar, Bhutan</span></div>
+          <div class="contact-item"><i class="fa fa-whatsapp"></i><a href="https://wa.me/97517781413">WhatsApp</a></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="sec-label reveal">Skills</div>
+        <div class="sec-divider reveal"></div>
+        <div class="skill-rows">
+          <div class="skill-row reveal">
+            <div class="skill-meta"><span class="skill-name">Liscad</span><span class="skill-level expert">Expert</span></div>
+            <div class="skill-bar-wrap"><div class="skill-bar bar-expert" data-w="92"></div></div>
+          </div>
+          <div class="skill-row reveal">
+            <div class="skill-meta"><span class="skill-name">AutoCAD</span><span class="skill-level intermediate">Intermediate</span></div>
+            <div class="skill-bar-wrap"><div class="skill-bar bar-intermediate" data-w="65"></div></div>
+          </div>
+          <div class="skill-row reveal">
+            <div class="skill-meta"><span class="skill-name">Microsoft Office</span><span class="skill-level expert">Expert</span></div>
+            <div class="skill-bar-wrap"><div class="skill-bar bar-expert" data-w="88"></div></div>
+          </div>
+          <div class="skill-row reveal">
+            <div class="skill-meta"><span class="skill-name">QGIS</span><span class="skill-level intermediate">Intermediate</span></div>
+            <div class="skill-bar-wrap"><div class="skill-bar bar-intermediate" data-w="60"></div></div>
+          </div>
+          <div class="skill-row reveal">
+            <div class="skill-meta"><span class="skill-name">HTML</span><span class="skill-level expert">Expert</span></div>
+            <div class="skill-bar-wrap"><div class="skill-bar bar-expert" data-w="85"></div></div>
+          </div>
+          <div class="skill-row reveal">
+            <div class="skill-meta"><span class="skill-name">CSS</span><span class="skill-level intermediate">Intermediate</span></div>
+            <div class="skill-bar-wrap"><div class="skill-bar bar-intermediate" data-w="68"></div></div>
+          </div>
+          <div class="skill-row reveal">
+            <div class="skill-meta"><span class="skill-name">Total Station &amp; GNSS</span><span class="skill-level expert">Expert</span></div>
+            <div class="skill-bar-wrap"><div class="skill-bar bar-expert" data-w="95"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="sec-label reveal">Find Me On</div>
+        <div class="sec-divider reveal"></div>
+        <div class="social-row reveal">
+          <a class="social-icon" href="https://www.facebook.com/sonlek.gnirc?mibextid=ZbWKwL" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+          <a class="social-icon" href="https://wa.me/97517781413" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa fa-whatsapp"></i></a>
+          <a class="social-icon" href="https://www.youtube.com/channel/UCaA_Nguli9tM8iwsm77NNnA" target="_blank" rel="noopener" aria-label="YouTube"><i class="fa fa-youtube"></i></a>
+          <a class="social-icon" href="#" aria-label="LinkedIn"><i class="fa fa-linkedin"></i></a>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- Main column -->
+    <div class="main-col">
+
+      <!-- Experience -->
+      <div>
+        <div class="sec-label reveal">Work Experience</div>
+        <div class="sec-divider reveal"></div>
+        <div class="exp-list">
+
+          <div class="exp-card reveal">
+            <div class="exp-header">
+              <div class="exp-title">Survey Associate</div>
+              <div class="exp-date"><i class="fa fa-calendar"></i> Oct 2023 – Present</div>
+            </div>
+            <div class="exp-org"><i class="fa fa-building"></i>MOIT/DOST/DGD</div>
+            <div class="exp-desc">Topographic surveying for road design, using Total Station, RTK, and software such as AutoCAD and Civil 3D.Responsible for control surveys, setting-out, and delivering precision data for large-scale construction projects.</div>
+          </div>
+
+          <div class="exp-card reveal">
+            <div class="exp-header">
+              <div class="exp-title">Surveyor</div>
+              <div class="exp-date"><i class="fa fa-calendar"></i> Mar 2023 – Sep 2024</div>
+            </div>
+            <div class="exp-org"><i class="fa fa-building"></i>Gyalsung Academy</div>
+            <div class="exp-desc">Leading engineering and topographic survey operations. Responsible for control surveys, setting-out, and delivering precision data for large-scale construction projects.</div>
+          </div>
+
+          <div class="exp-card reveal">
+            <div class="exp-header">
+              <div class="exp-title">Surveyor</div>
+              <div class="exp-date"><i class="fa fa-calendar"></i> Sep 2022 – Nov 2022</div>
+            </div>
+            <div class="exp-org"><i class="fa fa-building"></i>Thimphu Thromde</div>
+            <div class="exp-desc">Executed topographic surveys and supported engineering teams with field data collection and processing for urban development projects in Thimphu.</div>
+          </div>
+
+          <div class="exp-card reveal">
+            <div class="exp-header">
+              <div class="exp-title">Assistant Surveyor</div>
+              <div class="exp-date"><i class="fa fa-calendar"></i> Jul 2022 – Sep 2022</div>
+            </div>
+            <div class="exp-org"><i class="fa fa-building"></i>Kheychog Geoinfosys</div>
+            <div class="exp-desc">Assisted senior surveyors with control surveys, data entry, and field operations using Total Station and GNSS instruments.</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Quick contact form -->
+      <div>
+        <div class="sec-label reveal">Send a Message</div>
+        <div class="sec-divider reveal"></div>
+        <div class="form-card reveal">
+          <h3 class="form-title">Get In Touch</h3>
+          <p class="form-sub">Have a project in mind? I'd love to hear from you.</p>
+          <form id="cv-form" novalidate>
+            <div class="form-row2">
+              <div class="field">
+                <label for="cname">Name</label>
+                <input type="text" id="cname" placeholder="Your name" required/>
+              </div>
+              <div class="field">
+                <label for="cemail">Email</label>
+                <input type="email" id="cemail" placeholder="you@example.com" required/>
+              </div>
+            </div>
+            <div class="field">
+              <label for="cmsg">Message</label>
+              <textarea id="cmsg" placeholder="Tell me about your project…" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">
+              <i class="fa fa-paper-plane"></i> Send Message
+            </button>
+          </form>
+          <div class="success-msg" id="cv-success">
+            <div class="check">✓</div>
+            <h3>Message Sent!</h3>
+            <p>Thanks for reaching out. I'll reply within 24 hours.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER ───────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-links">
+    <a href="#">LinkedIn</a>
+    <a href="#">SoloLearn</a>
+    <a href="mailto:Kelsoncring1598@gmail.com">Email</a>
+  </div>
+  <p>Copyright &copy; <span class="accent">Kezang Tshering</span> · Bhutan 🇧🇹</p>
+</footer>
+
+<!-- SCRIPTS ──────────────────────────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="./shared.js"></script>
+
+<script>
+  stampYear();
+  initNav();
+  initCursor();
+  initBandReveals(".hero-band .reveal");
+  initContentReveals(".sidebar .reveal, .main-col .reveal");
+  initForm("cv-form", "cv-success");
+
+  /* Skill bars (resume uses .skill-bar with data-w) */
+  document.querySelectorAll(".skill-bar").forEach(bar => {
+    if (typeof ScrollTrigger !== "undefined") {
+      ScrollTrigger.create({
+        trigger: bar, start: "top 88%",
+        onEnter: () => gsap.to(bar, { width: bar.dataset.w + "%", duration: 1.4, ease: "power3.out" })
+      });
+    }
+  });
+
+  initThree({
+    shapes: [
+      { geo: new THREE.IcosahedronGeometry(1.2, 1),   x:  4, y:  2, z: -1, opacity: 0.06 },
+      { geo: new THREE.OctahedronGeometry(1, 0),       x: -4, y: -2, z:  0, opacity: 0.05 },
+    ]
+  });
+</script>
+</body>
+</html>
